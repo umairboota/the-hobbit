@@ -13,5 +13,8 @@
     "cypress": "^14.2.0",
     "cypress-downloadfile": "^1.2.4",
     "cypress-iframe": "^1.0.1"
+  },
+  "dependencies": {
+    "pdf-parse": "^1.1.1"
   }
 }

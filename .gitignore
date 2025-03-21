@@ -1,2 +1,2 @@
 # Ignore downloaded PDF files in the fixtures folder
-cypress/fixtures/*.pdf
+cypress/downloads/*.pdf

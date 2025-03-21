@@ -1,125 +1,119 @@
 class HomePage {
-    // Elements
-    searchInput() {
+  // Elements
+  searchInput() {
       return cy.get('#q');
-    }
-  
-    exactMatchCheckbox() {
+  }
+
+  exactMatchCheckbox() {
       return cy.get('#ftcb');
-    }
-  
-    pageCountDropdown() {
+  }
+
+  pageCountDropdown() {
       return cy.get('#select2-select-pagecount-container');
-    }
-  
-    pageCountOption(text) {
+  }
+
+  pageCountOption(text) {
       return cy.get('.select2-results__option').contains(text);
-    }
-  
-    pubYearDropdown() {
+  }
+
+  pubYearDropdown() {
       return cy.get('#select2-select-pubyear-container');
-    }
-  
-    pubYearOption(text) {
+  }
+
+  pubYearOption(text) {
       return cy.get('.select2-results__option').contains(text);
-    }
-  
-    languageDropdown() {
+  }
+
+  languageDropdown() {
       return cy.get('#select2-select-searchin-container');
-    }
-  
-    languageSearchInput() {
+  }
+
+  languageSearchInput() {
       return cy.get('.select2-search__field');
-    }
-  
-    languageOption(text) {
+  }
+
+  languageOption(text) {
       return cy.get('.select2-results__option').contains(text);
-    }
-  
-    searchResult(text) {
+  }
+
+  searchResult(text) {
       return cy.get('ul > li h2').contains(text);
-    }
-  
-    previewButton() {
+  }
+
+  previewButton() {
       return cy.get('#previewButtonMain');
-    }
-  
-    goToRemoteFolderButton() {
+  }
+
+  goToRemoteFolderButton() {
       return cy.get('#goToFileButtonMemberModal');
-    }
-  
-    alternativesParent() {
+  }
+
+  alternativesParent() {
       return cy.get('div#alternatives.mt-2');
-    }
-  
-    downloadButton() {
+  }
+
+  downloadButton() {
       return cy.get('a.btn.btn-success.btn-responsive');
-    }
-  
-    // Actions
-    visit() {
+  }
+
+  // Actions
+  visit() {
       cy.visit('/');
-    }
-  
-    searchForBook(bookName) {
+  }
+
+  searchForBook(bookName) {
       this.searchInput().should('be.visible').type(`${bookName}{enter}`);
-    }
-  
-    checkExactMatch() {
+  }
+
+  checkExactMatch() {
       this.exactMatchCheckbox().check({ force: true }).should('be.checked');
-    }
-  
-    selectPageCount(optionText) {
+  }
+
+  selectPageCount(optionText) {
       this.pageCountDropdown().click();
       this.pageCountOption(optionText).click();
-    }
-  
-    selectPubYear(optionText) {
+  }
+
+  selectPubYear(optionText) {
       this.pubYearDropdown().click();
       this.pubYearOption(optionText).click();
-    }
-  
-    selectLanguage(language) {
+  }
+
+  selectLanguage(language) {
       this.languageDropdown().click();
       this.languageSearchInput().type(language);
       this.languageOption(language).click();
-    }
-  
-    clickSearchResult(bookName) {
+  }
+
+  clickSearchResult(bookName) {
       this.searchResult(bookName).click();
-    }
-  
-    clickPreviewButton() {
+  }
+
+  clickPreviewButton() {
       this.previewButton().click();
-    }
-  
-    clickGoToRemoteFolderButton() {
+  }
+
+  clickGoToRemoteFolderButton() {
       this.goToRemoteFolderButton().click();
-    }
-  
-    downloadPdf() {
-      this.alternativesParent()
-        .should('exist', { timeout: 80000 }) 
-        .within(() => {
-          this.downloadButton()
-            // .should('be.visible')
-            .then(($downloadButton) => {
+  }
+
+  downloadPdf(pdfFilePath) {
+      this.alternativesParent().should('exist', { timeout: 80000 }).within(() => {
+          this.downloadButton().then(($downloadButton) => {
               const pdfUrl = $downloadButton.attr('href');
               cy.log('PDF URL:', pdfUrl);
-  
+
               // Download the PDF
               cy.request({
-                url: pdfUrl,
-                encoding: 'binary',
+                  url: pdfUrl,
+                  encoding: 'binary',
               }).then((response) => {
-                const fixturesFolder = 'cypress/fixtures';
-                const pdfFilePath = `${fixturesFolder}/The_Hobbit.pdf`;
-                cy.writeFile(pdfFilePath, response.body, 'binary');
-                cy.log(`PDF file saved to ${pdfFilePath}`);
+                  cy.writeFile(pdfFilePath, response.body, 'binary');
+                  cy.log(`PDF file saved to ${pdfFilePath}`);
               });
-            });
-        });
-    }
+          });
+      });
   }
-  
-  export default new HomePage();
+}
+
+export default new HomePage();
