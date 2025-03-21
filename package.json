@@ -1,0 +1,17 @@
+{
+  "name": "dir",
+  "version": "1.0.0",
+  "description": "test Project",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^14.2.0",
+    "cypress-downloadfile": "^1.2.4",
+    "cypress-iframe": "^1.0.1"
+  }
+}
